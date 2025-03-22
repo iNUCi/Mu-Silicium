@@ -24,13 +24,13 @@ from edk2toollib.utility_functions import RunCmd
 #                                Common Configuration                                     #
 # ####################################################################################### #
 class CommonPlatform ():
-    PackagesSupported = ("r9qb2Pkg")
+    PackagesSupported = ("balePkg")
     ArchSupported = ("AARCH64")
     TargetsSupported = ("DEBUG", "RELEASE")
-    Scopes = ('r9qb2', 'gcc_aarch64_linux', 'edk2-build')
+    Scopes = ('aston', 'gcc_aarch64_linux', 'edk2-build')
     WorkspaceRoot = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     PackagesPath = (
-        "Platforms/Samsung",
+        "Platforms/Realme",
         "Common/Mu",
         "Common/Mu_OEM_Sample",
         "Common/Mu_Tiano_Plus",
@@ -39,7 +39,7 @@ class CommonPlatform ():
         "Silicon/Arm/Mu_Tiano",
         "Silicon/Qualcomm",
         "Silicon/Silicium",
-        "Silicium-ACPI/Platforms/Samsung",
+        "Silicium-ACPI/Platforms/Realme",
         "Silicium-ACPI/SoCs/Qualcomm"
     )
 
@@ -102,10 +102,10 @@ class SettingsManager (UpdateSettingsManager, SetupSettingsManager, PrEvalSettin
         return build_these_packages
 
     def GetPlatformDscAndConfig (self) -> tuple:
-        return ("r9qb2Pkg/r9qb2.dsc", {})
+        return ("balePkg/bale.dsc", {})
 
     def GetName (self):
-        return "r9qb2"
+        return "bale"
 
     def GetPackagesPath (self):
         return CommonPlatform.PackagesPath
@@ -139,7 +139,7 @@ class PlatformBuilder (UefiBuilder, BuildSettingsManager):
         return CommonPlatform.Scopes
 
     def GetName (self):
-        return "r9qb2Pkg"
+        return "balePkg"
 
     def GetLoggingLevel (self, loggerType):
         return logging.INFO
@@ -148,8 +148,8 @@ class PlatformBuilder (UefiBuilder, BuildSettingsManager):
     def SetPlatformEnv (self):
         logging.debug ("PlatformBuilder SetPlatformEnv")
 
-        self.env.SetValue ("PRODUCT_NAME", "r9qb2", "Platform Hardcoded")
-        self.env.SetValue ("ACTIVE_PLATFORM", "r9qb2Pkg/r9qb2.dsc", "Platform Hardcoded")
+        self.env.SetValue ("PRODUCT_NAME", "bale", "Platform Hardcoded")
+        self.env.SetValue ("ACTIVE_PLATFORM", "balePkg/bale.dsc", "Platform Hardcoded")
         self.env.SetValue ("TARGET_ARCH", "AARCH64", "Platform Hardcoded")
         self.env.SetValue ("TOOL_CHAIN_TAG", "CLANGPDB", "set default to clangpdb")
         self.env.SetValue ("EMPTY_DRIVE", "FALSE", "Default to false")
@@ -160,6 +160,7 @@ class PlatformBuilder (UefiBuilder, BuildSettingsManager):
         self.env.SetValue ("BUILDREPORT_TYPES", "PCD DEPEX FLASH BUILD_FLAGS LIBRARY FIXED_ADDRESS HASH", "Setting build report types")
         self.env.SetValue ("BLD_*_MEMORY_PROTECTION", "TRUE", "Default")
         self.env.SetValue ("BLD_*_SHIP_MODE", "FALSE", "Default")
+        self.env.SetValue ("BLD_*_DEVICE_MODEL", self.env.GetValue("DEVICE_MODEL"), "Default")
         self.env.SetValue ("BLD_*_FD_BASE", self.env.GetValue("FD_BASE"), "Default")
         self.env.SetValue ("BLD_*_FD_SIZE", self.env.GetValue("FD_SIZE"), "Default")
         self.env.SetValue ("BLD_*_FD_BLOCKS", self.env.GetValue("FD_BLOCKS"), "Default")
