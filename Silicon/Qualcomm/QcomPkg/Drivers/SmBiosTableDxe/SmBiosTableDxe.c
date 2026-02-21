@@ -36,7 +36,7 @@ EFIAPI
 LogSmbiosData (
   IN  EFI_SMBIOS_TABLE_HEADER  *Template,
   IN  CHAR8                   **StringPack,
-  OUT EFI_SMBIOS_HANDLE        *DataSmbiosHande)
+  OUT EFI_SMBIOS_HANDLE        *DataSmbiosHandle)
 {
   EFI_STATUS               Status;
   EFI_SMBIOS_PROTOCOL     *mSmbiosProtocol;
@@ -102,8 +102,8 @@ LogSmbiosData (
   ASSERT_EFI_ERROR (Status);
 
   // Save SmBios Handle
-  if (DataSmbiosHande != NULL) {
-    *DataSmbiosHande = SmbiosHandle;
+  if (DataSmbiosHandle != NULL) {
+    *DataSmbiosHandle = SmbiosHandle;
   }
 
   // Free Memory
@@ -200,6 +200,7 @@ ProcessorInfoUpdateSmbiosType4 ()
   EFI_CLOCK_PROTOCOL    *mClockProtocol;
   CHAR8                  ProcessorModel[100];
   UINT32                 CpuFreq[2];
+  UINT8                  GhzValue[2];
 
   // Locate Chip Info Protocol
   Status = gBS->LocateProtocol (&gEfiChipInfoProtocolGuid, NULL, (VOID *)&mChipInfoProtocol);
@@ -269,22 +270,19 @@ ProcessorInfoUpdateSmbiosType4 ()
     CpuFreq[1] = FixedPcdGet32 (PcdSmbiosMaxCpuFreq);
   }
 
+  // Round CPU Freqs
+  CpuFreq[0] = ((CpuFreq[0] + 5) / 10) * 10;
+  CpuFreq[1] = ((CpuFreq[1] + 5) / 10) * 10;
+
   // Allocate Memory
   ZeroMem (ProcessorModel, 100);
 
-  // Update SoC String
-  if (CpuFreq[0] < 1000) {
-    AsciiSPrint (ProcessorModel, sizeof(ProcessorModel), "%a @ %u MHz", FixedPcdGetPtr (PcdSmbiosProcessorModel), CpuFreq[0]);
-  } else {
-    UINT8 GhzValue[2];
+  // Split GHz Freq
+  GhzValue[0] = CpuFreq[0] / 1000;
+  GhzValue[1] = (CpuFreq[0] / 10) % 100;
 
-    // Split GHz Freq
-    GhzValue[0] = CpuFreq[0] / 1000;
-    GhzValue[1] = (CpuFreq[0] / 10) % 100;
-
-    // Append GHz Freq
-    AsciiSPrint (ProcessorModel, sizeof(ProcessorModel), "%a @ %u.%u GHz", FixedPcdGetPtr (PcdSmbiosProcessorModel), GhzValue[0], GhzValue[1]);
-  }
+  // Append GHz Freq
+  AsciiSPrint (ProcessorModel, sizeof(ProcessorModel), "%a @ %1u.%2u GHz", FixedPcdGetPtr (PcdSmbiosProcessorModel), GhzValue[0], GhzValue[1]);
 
   // Update Max & Current Speed
   mProcessorInfoType4.MaxSpeed     = CpuFreq[0];
@@ -381,16 +379,16 @@ BiosLanguageInfoUpdateSmBiosType13 ()
 VOID
 PhyMemArrayInfoUpdateSmbiosType16 (IN UINT64 SystemMemorySize)
 {
-  EFI_SMBIOS_HANDLE MemArraySmbiosHande;
+  EFI_SMBIOS_HANDLE MemArraySmbiosHandle;
 
   // Update Memory Size
   mPhyMemArrayInfoType16.ExtendedMaximumCapacity = SystemMemorySize;
 
   // Register SmBios Structure
-  LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER *)&mPhyMemArrayInfoType16, mPhyMemArrayInfoType16Strings, &MemArraySmbiosHande);
+  LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER *)&mPhyMemArrayInfoType16, mPhyMemArrayInfoType16Strings, &MemArraySmbiosHandle);
 
   // Append SmBios Handle
-  mMemDevInfoType17.MemoryArrayHandle = MemArraySmbiosHande;
+  mMemDevInfoType17.MemoryArrayHandle = MemArraySmbiosHandle;
 }
 
 VOID
@@ -484,7 +482,7 @@ MemDevInfoUpdateSmbiosType17 (IN UINT64 SystemMemorySize)
 
   // Use PCD Overwrite
   if (mMemDevInfoType17.ConfiguredMemoryClockSpeed == 0 || FixedPcdGetBool (PcdForceMemorySpeed)) {
-    mMemDevInfoType17.Speed                      = FixedPcdGet32 (PcdSmbiosMemorySpeed) * 2;
+    mMemDevInfoType17.Speed                      = FixedPcdGet32 (PcdSmbiosMemorySpeed);
     mMemDevInfoType17.ConfiguredMemoryClockSpeed = FixedPcdGet32 (PcdSmbiosMemorySpeed);
   } else if (mMemDevInfoType17.MemoryType == MemoryTypeUnknown) {
     mMemDevInfoType17.MemoryType = FixedPcdGet32 (PcdSmbiosMemoryType);

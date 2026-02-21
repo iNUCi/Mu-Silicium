@@ -61,7 +61,7 @@ FV = FVMAIN_COMPACT
 ################################################################################
 
 [FV.FvMain]
-FvNameGuid         = 00bf6247-21d4-4219-a7f9-7b7a782c3c27
+FvNameGuid         = CD8D4C84-20AD-4073-8A28-3400FAE05941
 BlockSize          = 0x1000
 NumBlocks          = 0        # This FV gets compressed so make it just big enough
 FvAlignment        = 8        # FV alignment and FV attributes setting.
@@ -94,6 +94,9 @@ READ_LOCK_STATUS   = TRUE
   INF MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
   !include Include/ACPI.inc
 
+  # IORT DT
+  INF QcomPkg/Drivers/IortDtDxe/IortDtDxe.inf
+
   # Device Tree
   #INF EmbeddedPkg/Drivers/DtPlatformDxe/DtPlatformDxe.inf
   #FILE FREEFORM = 25462CDA-221F-47DF-AC1D-259CFAA4E326 {
@@ -122,11 +125,6 @@ READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
 
   INF SiliciumPkg/PrePi/PrePi.inf
-
-  FILE FREEFORM = dde58710-41cd-4306-dbfb-3fa90bb1d2dd {
-    SECTION UI = "uefiplat.cfg"
-    SECTION RAW = Binaries/marble/RawFiles/uefiplat.cfg
-  }
 
   FILE FV_IMAGE = 9E21FD93-9C72-4c15-8C4B-E77F1DB2D792 {
     SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {

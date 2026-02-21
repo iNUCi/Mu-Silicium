@@ -8,8 +8,9 @@
 ##
 
 [BuildOptions]
-  *_CLANGPDB_*_CC_FLAGS = -Wno-unused-const-variable -Wno-sometimes-uninitialized -Wno-unaligned-access -Wno-deprecated-non-prototype -D CLANG -DDISABLE_SECUREBOOT=$(DISABLE_SECUREBOOT)
-  *_CLANGPDB_AARCH64_CC_FLAGS = -D __DEPRECATED_AARCH64_4K_RUNTIME_GRANULARITY -D HAS_ACTLR_EL1_UNIMPLEMENTED_ERRATA=$(HAS_ACTLR_EL1_UNIMPLEMENTED_ERRATA) -D HAS_AMCNTENSET0_EL0_UNIMPLEMENTED_ERRATA=$(HAS_AMCNTENSET0_EL0_UNIMPLEMENTED_ERRATA) -D HAS_GIC_V3_WITHOUT_IRM_FLAG_SUPPORT_ERRATA=$(HAS_GIC_V3_WITHOUT_IRM_FLAG_SUPPORT_ERRATA) -D HAS_PSCI_MEMPROTECT_FAILING_ERRATA=$(HAS_PSCI_MEMPROTECT_FAILING_ERRATA)
+  DEBUG_CLANGPDB_*_CC_FLAGS = -D EFI_DEBUG
+  *_CLANGPDB_*_CC_FLAGS = -Wno-unused-const-variable -Wno-sometimes-uninitialized -Wno-unaligned-access -Wno-deprecated-non-prototype -D CLANG -D DISABLE_SECUREBOOT=$(DISABLE_SECUREBOOT)
+  *_CLANGPDB_AARCH64_CC_FLAGS = -D __DEPRECATED_AARCH64_4K_RUNTIME_GRANULARITY
 
 [BuildOptions.common.EDKII.SEC,BuildOptions.common.EDKII.MM_CORE_STANDALONE]
   *_CLANGPDB_*_DLINK_FLAGS = /ALIGN:0x1000 /FILEALIGN:0x1000
@@ -30,13 +31,26 @@
   #
   # Vendor Stuff
   #
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"3.0.9"
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"3.2"
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"Project Silicium"
 
   #
   # ACPI
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemId|"SILICI"
+
+  #
+  # Memory
+  #
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIReclaimMemory|0
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIMemoryNVS|0
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiReservedMemoryType|0
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesData|300
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesCode|150
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesCode|1000
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesData|800
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderCode|10
+  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderData|0
 
   #
   # Print Stuff
@@ -93,6 +107,9 @@
   # Input
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdConInConnectOnDemand|TRUE
+
+[PcdsDynamicExDefault]
+  gMsGraphicsPkgTokenSpaceGuid.PcdPostBackgroundColoringSkipCount|0
 
 [PcdsDynamicDefault]
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|0
@@ -277,7 +294,7 @@
   #
   # Device Tree Libraries
   #
-  FdtLib|EmbeddedPkg/Library/FdtLib/FdtLib.inf
+  FdtLib|MdePkg/Library/BaseFdtLib/BaseFdtLib.inf
   DtPlatformDtbLoaderLib|EmbeddedPkg/Library/DxeDtPlatformDtbLoaderLibDefault/DxeDtPlatformDtbLoaderLibDefault.inf
 
   #
@@ -300,6 +317,7 @@
   PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   PrePiHobListPointerLib|ArmPlatformPkg/Library/PrePiHobListPointerLib/PrePiHobListPointerLib.inf
   ArmMmuLib|ArmPkg/Library/ArmMmuLib/ArmMmuPeiLib.inf
+  SortLib|MdeModulePkg/Library/BaseSortLib/BaseSortLib.inf
 
 [LibraryClasses.common.DXE_CORE]
   DxeCoreEntryPoint|MdePkg/Library/DxeCoreEntryPoint/DxeCoreEntryPoint.inf
@@ -377,14 +395,9 @@
   MdeModulePkg/Bus/Sd/SdDxe/SdDxe.inf
   FatPkg/EnhancedFatDxe/Fat.inf
 
-  # Pci
-  MdeModulePkg/Bus/Pci/XhciDxe/XhciDxe.inf   # USB 3.*
-  MdeModulePkg/Bus/Pci/EhciDxe/EhciDxe.inf   # USB 2.*
-
   # USB
   MdeModulePkg/Bus/Usb/UsbBusDxe/UsbBusDxe.inf
   MdeModulePkg/Bus/Usb/UsbKbDxe/UsbKbDxe.inf
-  MdeModulePkg/Bus/Usb/UsbMouseAbsolutePointerDxe/UsbMouseAbsolutePointerDxe.inf
   MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 
   # ACPI
@@ -403,9 +416,7 @@
   # BDS
   MdeModulePkg/Universal/BdsDxe/BdsDxe.inf {
     <LibraryClasses>
-!if $(ENABLE_KEP) == 1
       NULL|SiliciumPkg/Library/KernelErrataPatcherLib/KernelErrataPatcherLib.inf
-!endif
   }
   PcBdsPkg/MsBootPolicy/MsBootPolicy.inf
   MdeModulePkg/Universal/PrintDxe/PrintDxe.inf

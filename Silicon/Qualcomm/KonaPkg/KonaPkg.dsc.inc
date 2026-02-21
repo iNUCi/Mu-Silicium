@@ -17,7 +17,6 @@
   USE_PHYSICAL_TIMER                         = 0
 
   # KEP
-  ENABLE_KEP                                 = 1
   HAS_ACTLR_EL1_UNIMPLEMENTED_ERRATA         = 0
   HAS_AMCNTENSET0_EL0_UNIMPLEMENTED_ERRATA   = 0
   HAS_GIC_V3_WITHOUT_IRM_FLAG_SUPPORT_ERRATA = 0
@@ -31,17 +30,6 @@
   gQcomPkgTokenSpaceGuid.PcdEnableInfoBlkHob|TRUE
   gQcomPkgTokenSpaceGuid.PcdEnableShimHob|TRUE
   gQcomPkgTokenSpaceGuid.PcdEnableProdmodeHob|FALSE
-
-  # Memory
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIReclaimMemory|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIMemoryNVS|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiReservedMemoryType|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesData|80
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesCode|40
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesCode|400
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesData|800
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderCode|10
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderData|0
 
   # CPU
   gArmPlatformTokenSpaceGuid.PcdCoreCount|8
@@ -88,7 +76,6 @@
 
 [LibraryClasses]
   PlatformPrePiLib|KonaPkg/Library/PlatformPrePiLib/PlatformPrePiLib.inf
-  RFSProtectionLib|KonaPkg/Library/RFSProtectionLib/RFSProtectionLib.inf
   AcpiPlatformUpdateLib|KonaPkg/Library/AcpiPlatformUpdateLib/AcpiPlatformUpdateLib.inf
   HwResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf
   ResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf

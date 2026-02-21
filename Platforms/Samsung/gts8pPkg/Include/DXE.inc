@@ -1,8 +1,7 @@
-  INF Binaries/gts8p/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
-
   INF MdeModulePkg/Core/Dxe/DxeMain.inf
   INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
 
+  INF Binaries/gts8p/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
   INF Binaries/gts8p/QcomPkg/Drivers/EnvDxe/EnvDxe.inf
 
   INF MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
@@ -43,6 +42,7 @@
 
   INF MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf
 
+  # Samsung Drivers Require this to work properly.
   INF Binaries/gts8p/MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
   INF Binaries/gts8p/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
 
@@ -64,7 +64,6 @@
   INF QcomPkg/Drivers/DynamicRamDxe/DynamicRamDxe.inf
 
   INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
-
   INF EmbeddedPkg/SimpleTextInOutSerial/SimpleTextInOutSerial.inf
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
   INF MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
@@ -89,15 +88,12 @@
   INF Binaries/gts8p/QcomPkg/Drivers/UsbPwrCtrlDxe/UsbPwrCtrlDxe.inf
   INF Binaries/gts8p/QcomPkg/Drivers/TsensDxe/TsensDxe.inf
   INF Binaries/gts8p/QcomPkg/Drivers/DDRInfoDxe/DDRInfoDxe.inf
-
-
   INF Binaries/gts8p/QcomPkg/Drivers/UsbfnDwc3Dxe/UsbfnDwc3Dxe.inf
   INF Binaries/gts8p/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
   INF Binaries/gts8p/QcomPkg/Drivers/XhciDxe/XhciDxe.inf
 
   INF MdeModulePkg/Bus/Usb/UsbBusDxe/UsbBusDxe.inf
   INF MdeModulePkg/Bus/Usb/UsbKbDxe/UsbKbDxe.inf
-  INF MdeModulePkg/Bus/Usb/UsbMouseAbsolutePointerDxe/UsbMouseAbsolutePointerDxe.inf
   INF MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 
   INF Binaries/gts8p/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf

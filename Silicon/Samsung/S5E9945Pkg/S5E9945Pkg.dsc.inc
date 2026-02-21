@@ -16,28 +16,10 @@
   USE_CUSTOM_TIMER                           = 0
   USE_PHYSICAL_TIMER                         = 1
 
-  # KEP
-  ENABLE_KEP                                 = 0
-  HAS_ACTLR_EL1_UNIMPLEMENTED_ERRATA         = 0
-  HAS_AMCNTENSET0_EL0_UNIMPLEMENTED_ERRATA   = 0
-  HAS_GIC_V3_WITHOUT_IRM_FLAG_SUPPORT_ERRATA = 0
-  HAS_PSCI_MEMPROTECT_FAILING_ERRATA         = 0
-
 [BuildOptions]
   *_*_AARCH64_CC_FLAGS = -march=armv9.2-a+crypto+rcpc
 
 [PcdsFixedAtBuild]
-  # Memory
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIReclaimMemory|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIMemoryNVS|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiReservedMemoryType|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesData|80
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesCode|40
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesCode|400
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesData|800
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderCode|10
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderData|0
-
   # CPU
   gArmPlatformTokenSpaceGuid.PcdCoreCount|10
   gArmPlatformTokenSpaceGuid.PcdClusterCount|4
@@ -72,10 +54,10 @@
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosLevel1InstCacheSize|0x20
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosLevel1DataCacheSize|0x20
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosLevel2CacheSize|0x400
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosLevel3CacheSize|0x2000       # Unoffical Value
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosLevel3CacheSize|0x2000       # Unofficial Value
 
   # SmBios Memory Extras
-  gSiliciumPkgTokenSpaceGuid.PcdSmbiosMemorySpeed|4200             # Unoffical Value
+  gSiliciumPkgTokenSpaceGuid.PcdSmbiosMemorySpeed|4200             # Unofficial Value
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosMemoryType|35
 
 [LibraryClasses]

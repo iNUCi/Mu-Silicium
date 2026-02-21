@@ -1,13 +1,9 @@
-  FILE FREEFORM = A91D838E-A5FA-4138-825D-455E2303079E {
-    SECTION UI = "BDS_Menu.cfg"
-    SECTION RAW = Binaries/pagani/RawFiles/BDS_Menu.cfg
-  }
-
   FILE FREEFORM = A1E235DE-E825-4591-9623-C43175811826 {
     SECTION UI = "SecParti.cfg"
     SECTION RAW = Binaries/pagani/RawFiles/SecParti.cfg
   }
 
+!if $(USE_CUSTOM_DISPLAY_DRIVER) == 1
   FILE FREEFORM = B4FEDF4D-8A67-45AB-8131-FBCC321E146F {
     SECTION UI = "Panel_AA545_P_3_A0005_dsc_cmd.xml"
     SECTION RAW = Binaries/pagani/RawFiles/Panel_AA545_P_3_A0005_dsc_cmd.xml
@@ -452,8 +448,4 @@
     SECTION UI = "PanelSimConfig.csv"
     SECTION RAW = Binaries/pagani/RawFiles/PanelSimConfig.csv
   }
-
-  FILE FREEFORM = 21E9BDD9-6C3F-4F10-84A5-BBEC322741F1 {
-    SECTION UI = "uefipil.cfg"
-    SECTION RAW = Binaries/pagani/RawFiles/uefipil.cfg
-  }
+!endif

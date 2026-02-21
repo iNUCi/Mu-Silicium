@@ -1,21 +1,16 @@
 APRIORI DXE {
-  INF Binaries/r0q/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
-
-  # First, install the PCD driver and call DxeInit
   INF MdeModulePkg/Core/Dxe/DxeMain.inf
   INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
+  INF QcomPkg/Drivers/IortDtDxe/IortDtDxe.inf
 
+  INF Binaries/r0q/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
   INF Binaries/r0q/QcomPkg/Drivers/EnvDxe/EnvDxe.inf
 
   INF MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
   INF MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
   INF MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
-
-  # Next, install cpu protocol and enable the interrupt controller
   INF ArmPkg/Drivers/CpuDxe/CpuDxe.inf
   INF ArmPkg/Drivers/ArmGicDxe/ArmGicDxe.inf
-
-  # Core Drivers
   INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
   INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
 
@@ -48,8 +43,10 @@ APRIORI DXE {
 
   INF Binaries/r0q/QcomPkg/Drivers/PmicDxe/PmicDxeLa.inf
 
+  # Samsung Drivers Require this to work properly.
   INF Binaries/r0q/MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
   INF Binaries/r0q/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
+
   INF MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
 
   INF Binaries/r0q/QcomPkg/Drivers/SdccDxe/SdccDxe.inf

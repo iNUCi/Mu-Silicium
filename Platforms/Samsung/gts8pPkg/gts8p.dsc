@@ -31,7 +31,7 @@
 
   # UEFI Stack Addresses
   gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0xA760D000
-  gEmbeddedTokenSpaceGuid.PcdPrePiStackSize|0x00040000  
+  gEmbeddedTokenSpaceGuid.PcdPrePiStackSize|0x00040000
 
   # Device GUID
   gSiliciumPkgTokenSpaceGuid.PcdDeviceGuid|{ 0x45, 0x9C, 0x4F, 0x54, 0x10, 0x60, 0xA3, 0x4A, 0x83, 0x55, 0x51, 0xFF, 0xC2, 0x40, 0xD2, 0xDB }
@@ -49,12 +49,12 @@
   gSiliciumPkgTokenSpaceGuid.PcdFrameBufferColorDepth|32
 
   # Platform Pei
-  gQcomPkgTokenSpaceGuid.PcdPlatformType|"LA"
+  gQcomPkgTokenSpaceGuid.PcdPlatformType|"WP"
   gQcomPkgTokenSpaceGuid.PcdScheduleInterfaceAddr|0xA703B920
   gQcomPkgTokenSpaceGuid.PcdDtbExtensionAddr|0xA703B0C8
 
   # Dynamic RAM Start Address
-  gSiliciumPkgTokenSpaceGuid.PcdRamPartitionBase|0xF6400000
+  gSiliciumPkgTokenSpaceGuid.PcdRamPartitionBase|0xF1C00000
 
   # SD Card Slot
   gQcomPkgTokenSpaceGuid.PcdInitCardSlot|TRUE

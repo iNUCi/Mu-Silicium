@@ -17,7 +17,6 @@
   USE_PHYSICAL_TIMER                         = 0
 
   # KEP
-  ENABLE_KEP                                 = 0
   HAS_ACTLR_EL1_UNIMPLEMENTED_ERRATA         = 0
   HAS_AMCNTENSET0_EL0_UNIMPLEMENTED_ERRATA   = 0
   HAS_GIC_V3_WITHOUT_IRM_FLAG_SUPPORT_ERRATA = 0
@@ -34,17 +33,6 @@
 
   # FV Decompress Address
   gQcomPkgTokenSpaceGuid.PcdFvDecompressAddr|0xA7049F78
-
-  # Memory
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIReclaimMemory|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiACPIMemoryNVS|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiReservedMemoryType|0
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesData|80
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiRuntimeServicesCode|40
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesCode|400
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiBootServicesData|800
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderCode|10
-  gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderData|0
 
   # CPU
 !if $(SOC_TYPE) == 1
@@ -94,5 +82,8 @@
   HwResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf
   ResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf
   SoCPlatformLib|PakalaPkg/Library/SoCPlatformLib/SoCPlatformLib.inf
+
+[Components]
+  QcomPkg/Drivers/IortDtDxe/IortDtDxe.inf
 
 !include QcomPkg/QcomPkg.dsc.inc

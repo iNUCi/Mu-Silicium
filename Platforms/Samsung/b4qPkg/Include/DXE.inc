@@ -1,8 +1,7 @@
-  INF Binaries/b4q/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
-
   INF MdeModulePkg/Core/Dxe/DxeMain.inf
   INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
 
+  INF Binaries/b4q/QcomPkg/Drivers/SamsungDxe/SecShareInfoDxe/SecShareInfoDxe.inf
   INF Binaries/b4q/QcomPkg/Drivers/EnvDxe/EnvDxe.inf
 
   INF MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
@@ -43,6 +42,7 @@
 
   INF MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf
 
+  # Samsung Drivers Require this to work properly.
   INF Binaries/b4q/MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
   INF Binaries/b4q/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
 
@@ -64,7 +64,6 @@
   INF QcomPkg/Drivers/DynamicRamDxe/DynamicRamDxe.inf
 
   INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
-
   INF EmbeddedPkg/SimpleTextInOutSerial/SimpleTextInOutSerial.inf
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
   INF MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
@@ -95,7 +94,6 @@
 
   INF MdeModulePkg/Bus/Usb/UsbBusDxe/UsbBusDxe.inf
   INF MdeModulePkg/Bus/Usb/UsbKbDxe/UsbKbDxe.inf
-  INF MdeModulePkg/Bus/Usb/UsbMouseAbsolutePointerDxe/UsbMouseAbsolutePointerDxe.inf
   INF MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 
   INF Binaries/b4q/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf

@@ -1,7 +1,7 @@
 APRIORI DXE {
-  # First, install the PCD driver and call DxeInit
   INF MdeModulePkg/Core/Dxe/DxeMain.inf
   INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
+  INF QcomPkg/Drivers/IortDtDxe/IortDtDxe.inf
 
   INF Binaries/pagani/QcomPkg/Drivers/EnvDxe/EnvDxeEnhanced.inf
 
@@ -11,11 +11,8 @@ APRIORI DXE {
 
   INF Binaries/pagani/QcomPkg/Drivers/QcomWDogDxe/QcomWDogDxe.inf
 
-  # Next, install cpu protocol and enable the interrupt controller
   INF ArmPkg/Drivers/CpuDxe/CpuDxe.inf
   INF ArmPkg/Drivers/ArmGicDxe/ArmGicDxe.inf
-
-  # Core Drivers
   INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
   INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
 
@@ -39,7 +36,6 @@ APRIORI DXE {
   INF Binaries/pagani/QcomPkg/Drivers/CalibrationDxe/CalibrationDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/VcsDxe/VcsDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/ClockDxe/ClockDxe.inf
-
   INF Binaries/pagani/QcomPkg/Drivers/ICBDxe/ICBDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/ShmBridgeDxe/ShmBridgeDxeLA.inf
   INF Binaries/pagani/QcomPkg/Drivers/TzDxe/ScmDxeCompat.inf
@@ -51,15 +47,13 @@ APRIORI DXE {
   INF MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
 
   INF Binaries/pagani/QcomPkg/Drivers/PmicDxe/PmicDxeLa.inf
-
-  
   INF Binaries/pagani/MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
   INF Binaries/pagani/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
+
   INF MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
 
   INF Binaries/pagani/QcomPkg/Drivers/SdccDxe/SdccDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/UFSDxe/UFSDxe.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusStorageDxe/OplusStorageDxe.inf
 
   INF FatPkg/EnhancedFatDxe/Fat.inf
 
@@ -68,11 +62,8 @@ APRIORI DXE {
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 
   INF Binaries/pagani/QcomPkg/Drivers/DDRInfoDxe/DDRInfoDxe.inf
-
   INF Binaries/pagani/QcomPkg/Drivers/OcdtDxe/OplusProject.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusS4ResetDxe/OplusS4ResetDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/TsensDxe/TsensDxe.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusFpgaDxe/OplusFpga.inf
   INF Binaries/pagani/QcomPkg/Drivers/FeatureEnablerDxe/FeatureEnablerDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/FvUtilsDxe/FvUtilsEnhancedDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/PILProxyDxe/PILProxyDxe.inf
@@ -95,8 +86,6 @@ APRIORI DXE {
   INF Binaries/pagani/QcomPkg/Drivers/PmicGlinkDxe/PmicGlinkDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/UsbPwrCtrlDxe/UsbPwrCtrlDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/QcomChargerDxe/QcomChargerDxeLA.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusVibrDxe/OplusVibrDxe.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusSecurityDxe/OplusSecurityDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/ChargerExDxe/ChargerExDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/UsbfnDwc3Dxe/UsbfnDwc3Dxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
@@ -131,7 +120,4 @@ APRIORI DXE {
 
   INF Binaries/pagani/QcomPkg/Drivers/RscDxe/RscDxe.inf
   INF Binaries/pagani/QcomPkg/Drivers/RmVmDxe/RmVmDxe.inf
-  INF Binaries/pagani/QcomPkg/Drivers/QRKSDxe/QRKSDxe.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OplusOrdumpDxe/OplusOrdump.inf
-  INF Binaries/pagani/QcomPkg/Drivers/OGaugeAuthDxe/OGaugeAuth.inf
 }

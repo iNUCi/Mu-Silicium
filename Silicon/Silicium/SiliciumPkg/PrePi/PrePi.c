@@ -196,30 +196,12 @@ PrePiMain (IN UINT64 StartTimeStamp)
   }
 }
 
+#ifdef EFI_DEBUG
 VOID
-CEntryPoint ()
+ClearScreen ()
 {
   EFI_STATUS                      Status;
   EFI_MEMORY_REGION_DESCRIPTOR_EX DisplayRegion;
-  EFI_MEMORY_REGION_DESCRIPTOR_EX CpuVectorsRegion;
-  UINT64                          StartTimeStamp;
-
-  // Locate "CPU Vectors" Memory Region
-  Status = LocateMemoryMapAreaByName ("CPU Vectors", &CpuVectorsRegion);
-  if (EFI_ERROR (Status)) {
-    // Locate "CPU_Vectors" Memory Region
-    ASSERT_EFI_ERROR (LocateMemoryMapAreaByName ("CPU_Vectors", &CpuVectorsRegion));
-  }
-
-  // Write Vector Table Address
-  ArmWriteVBar (CpuVectorsRegion.Address);
-
-  // Run SoC Specific Code
-  PlatformInitialize ();
-
-  //
-  // !!! Make this Debug only !!!
-  //
 
   // Locate 'Display Reserved' Memory Region
   Status = LocateMemoryMapAreaByName ("Display Reserved", &DisplayRegion);
@@ -234,17 +216,52 @@ CEntryPoint ()
     // Clear Display
     ZeroMem ((VOID *)DisplayRegion.Address, DisplayRegion.Length);
   }
+}
+#endif
 
-  //
-  // !!! Make this Debug only !!!
-  //
+VOID
+SetupVectorTable ()
+{
+  EFI_STATUS                      Status;
+  EFI_MEMORY_REGION_DESCRIPTOR_EX CpuVectorsRegion;
+
+  // Locate "CPU Vectors" Memory Region
+  Status = LocateMemoryMapAreaByName ("CPU Vectors", &CpuVectorsRegion);
+  if (EFI_ERROR (Status)) {
+    // Locate "CPU_Vectors" Memory Region
+    ASSERT_EFI_ERROR (LocateMemoryMapAreaByName ("CPU_Vectors", &CpuVectorsRegion));
+  }
+
+  // Write Vector Table Address
+  ArmWriteVBar (CpuVectorsRegion.Address);
+
+  // Fill Vector Table
+  SetMem32 ((VOID *)CpuVectorsRegion.Address, 0x800, 0x14000000);
+}
+
+VOID
+CEntryPoint ()
+{
+  EFI_STATUS Status;
+  UINT64     StartTimeStamp;
+
+  // Setup Vector Table
+  SetupVectorTable ();
+
+  // Run SoC Specific Code
+  PlatformInitialize ();
+
+#ifdef EFI_DEBUG
+  // Clear Screen
+  ClearScreen ();
+#endif
 
   // Init Serial Port
   SerialPortInitialize ();
 
   // Print UEFI Version Message
   DEBUG ((EFI_D_WARN, "\n"));
-  DEBUG ((EFI_D_WARN, "Project Silicium for %a\n",               FixedPcdGetPtr (PcdSmbiosSystemModel)));
+  DEBUG ((EFI_D_WARN, "Project Silicium for %a %a\n",            FixedPcdGetPtr (PcdSmbiosSystemManufacturer), FixedPcdGetPtr (PcdSmbiosSystemModel)));
   DEBUG ((EFI_D_WARN, "Firmware Version %s Build at %a on %a\n", PcdGetPtr (PcdFirmwareVersionString), __TIME__, __DATE__));
   DEBUG ((EFI_D_WARN, "\n"));
 

@@ -1,8 +1,4 @@
-  FILE FREEFORM = A91D838E-A5FA-4138-825D-455E2303079E {
-    SECTION UI = "BDS_Menu.cfg"
-    SECTION RAW = Binaries/surya/RawFiles/BDS_Menu.cfg
-  }
-
+!if $(USE_CUSTOM_DISPLAY_DRIVER) == 1
   FILE FREEFORM = 2BC9BFB4-693B-4E44-A22E-097F392DBBF1 {
     SECTION UI = "Panel_huaxing_nt36672c_fhd_vid.xml"
     SECTION RAW = Binaries/surya/RawFiles/Panel_huaxing_nt36672c_fhd_vid.xml
@@ -12,6 +8,7 @@
     SECTION UI = "Panel_tianma_nt36672c_fhd_vid.xml"
     SECTION RAW = Binaries/surya/RawFiles/Panel_tianma_nt36672c_fhd_vid.xml
   }
+!endif
 
   FILE FREEFORM = A1E235DE-E825-4591-9623-C43175811826 {
     SECTION UI = "SecParti.cfg"
