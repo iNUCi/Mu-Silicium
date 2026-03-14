@@ -27,6 +27,7 @@ APRIORI DXE {
   INF Binaries/nabu/QcomPkg/Drivers/RpmhDxe/RpmhDxe.inf
   INF Binaries/nabu/QcomPkg/Drivers/PdcDxe/PdcDxe.inf
   INF Binaries/nabu/QcomPkg/Drivers/ClockDxe/ClockDxe.inf
+  INF QcomPkg/Drivers/CpuClockHandlerDxe/CpuClockHandlerDxe.inf
   INF Binaries/nabu/QcomPkg/Drivers/ShmBridgeDxe/ShmBridgeDxeLA.inf
   INF Binaries/nabu/QcomPkg/Drivers/TzDxe/ScmDxeLA.inf
 
