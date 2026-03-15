@@ -58,7 +58,7 @@
   gSiliciumPkgTokenSpaceGuid.PcdFrameBufferColorDepth|32
 
   # Platform Pei
-  gQcomPkgTokenSpaceGuid.PcdPlatformType|"LA"
+  gQcomPkgTokenSpaceGuid.PcdPlatformType|"WP"       # Actually "LA"
 
   # Dynamic RAM Start Address
   gSiliciumPkgTokenSpaceGuid.PcdRamPartitionBase|0xA3C00000
