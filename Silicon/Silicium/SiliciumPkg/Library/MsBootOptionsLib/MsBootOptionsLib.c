@@ -243,6 +243,7 @@ MsBootOptionsLibRegisterDefaultBootOptions ()
   UINT8                     BootOptionCount;
 
   // Register Default Boot Options
+  RegisterFvBootOption (&gSimpleInitFileGuid,                L"Simple Init",      (UINTN)-1, LOAD_OPTION_ACTIVE, (UINT8 *)"SI",  sizeof ("SI"));
   RegisterFvBootOption (&gMsBootPolicyFileGuid,              L"Internal Storage", (UINTN)-1, LOAD_OPTION_ACTIVE, (UINT8 *)"SSD", sizeof ("SSD"));
   RegisterFvBootOption (&gMsBootPolicyFileGuid,              L"USB Storage",      (UINTN)-1, LOAD_OPTION_ACTIVE, (UINT8 *)"USB", sizeof ("USB"));
   RegisterFvBootOption (FixedPcdGetPtr (PcdUfpDeviveFwFile), L"FFU Mode",         (UINTN)-1, LOAD_OPTION_HIDDEN, NULL, 0);

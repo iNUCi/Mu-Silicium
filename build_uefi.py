@@ -43,6 +43,7 @@ class BuildContext:
     device:            str
     device_model:      int
     build_mode:        str
+    toolchain:         str
     enable_secureboot: bool
     cleanup:           bool
     update:            bool
@@ -77,6 +78,7 @@ def parse_arguments () -> BuildContext:
     parser.add_argument ("-d", "--device",            type=str, required=True,                                   help="Defines the Device to Build.")
     parser.add_argument ("-m", "--model",             type=int, default=0,                                       help="Defines the Release Type of the Build.")
     parser.add_argument ("-r", "--release",           type=str, default="RELEASE", choices=["RELEASE", "DEBUG"], help="Defines the Model Type of the Selected Target Device.")
+    parser.add_argument ("-t", "--toolchain",         type=str, default="CLANGDWARF",                            help="Defines the Toolchain used for the Build.")
     parser.add_argument ("-s", "--enable-secureboot", action="store_true",                                       help="Enables Secure Boot.")
     parser.add_argument ("-c", "--clean",             action="store_true",                                       help="Removes Old Build Files and Starts a Clean Build.")
     parser.add_argument ("-u", "--update",            action="store_true",                                       help="Updates your Local Repo before Building.")
@@ -89,6 +91,7 @@ def parse_arguments () -> BuildContext:
         device            = args.device,
         device_model      = args.model,
         build_mode        = args.release,
+        toolchain         = args.toolchain,
         enable_secureboot = args.enable_secureboot,
         cleanup           = args.clean,
         update            = args.update
@@ -213,6 +216,10 @@ def prepare_uefi_environment (script_path: Path, build_mode: str, update: bool) 
 
     return True
 
+def prepare_simpleinit () -> bool:
+    cmd = ["./simpleinit_setup.sh"]
+    return subprocess.run (cmd).returncode == 0
+
 def compile_uefi (ctx: BuildContext, fd_config: dict, script_path: Path) -> bool:
     # Get FD Details
     fd_base   = hex (fd_config.get ("base"))
@@ -224,6 +231,7 @@ def compile_uefi (ctx: BuildContext, fd_config: dict, script_path: Path) -> bool
         sys.executable,
         str (script_path),
         f"TARGET={ctx.build_mode}",
+        f"TOOL_CHAIN_TAG={ctx.toolchain}",
         f"ENABLE_SECUREBOOT={int (ctx.enable_secureboot)}",
         f"FD_BASE={fd_base}",
         f"FD_SIZE={fd_size}",
@@ -237,7 +245,7 @@ def compile_uefi (ctx: BuildContext, fd_config: dict, script_path: Path) -> bool
 def create_android_boot_img (ctx: BuildContext, image_kernel_config: dict, image_config: dict, append_boot_shim: bool, add_output_suffix: bool) -> bool:
     # Set Base Paths
     device_pkg_path = BUILD_PATH         / f"{ctx.device}Pkg"
-    fv_path         = device_pkg_path    / f"{ctx.build_mode}_CLANGPDB" / "FV"
+    fv_path         = device_pkg_path    / f"{ctx.build_mode}_{ctx.toolchain}" / "FV"
 
     # Set File Paths
     device_dtb      = RESOURCE_DTBS_PATH / f"{ctx.device}.dtb"
@@ -362,7 +370,7 @@ def create_payload_file (ctx: BuildContext, payload_config: dict, append_boot_sh
 
     # Set Base Paths
     device_pkg_path = BUILD_PATH      / f"{ctx.device}Pkg"
-    fv_path         = device_pkg_path / f"{ctx.build_mode}_CLANGPDB" / "FV"
+    fv_path         = device_pkg_path / f"{ctx.build_mode}_{ctx.toolchain}" / "FV"
 
     # Set File Paths
     uefi_fd         = fv_path         / "SILICIUM_UEFI.fd"
@@ -504,6 +512,11 @@ def main ():
     # Apply Mu_Basecore Patches
     for patch_name in ["Auth-Service.patch", "Boot-Manager.patch", "Timer.patch", "Usb-Bus.patch"]:
         if not handle_git_patch (MU_BASECORE_PATH, patch_name, False):
+            sys.exit (1)
+
+    # SimpleInit setup
+    if sys.platform.startswith('linux'):
+        if not prepare_simpleinit ():
             sys.exit (1)
 
     # Compile Device UEFI

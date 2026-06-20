@@ -1,0 +1,1 @@
+Mainline Linux device tree, taken from https://gitlab.com/sm8150-mainline/linux/-/blob/sm8150/6.17/arch/arm64/boot/dts/qcom/sm8150-xiaomi-nabu.dts?ref_type=heads

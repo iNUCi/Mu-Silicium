@@ -69,6 +69,12 @@
   #
   gQcomPkgTokenSpaceGuid.PcdPlatformType|"LA"
 
+  #
+  # SimpleInit settings
+  #
+  gSimpleInitTokenSpaceGuid.PcdLoggerdUseConsole|FALSE
+  gSimpleInitTokenSpaceGuid.PcdGuiDefaultDPI|320
+
 [LibraryClasses]
   #
   # Memory Libraries
