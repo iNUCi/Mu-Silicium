@@ -8,22 +8,29 @@
 ##
 
 [BuildOptions]
-  RELEASE_CLANGPDB_*_CC_FLAGS = -D MDEPKG_NDEBUG
-  *_CLANGPDB_*_CC_FLAGS       = -Wno-unused-const-variable -Wno-sometimes-uninitialized -Wno-unaligned-access -Wno-deprecated-non-prototype
-  *_CLANGPDB_*_CC_FLAGS       = -D CLANG -D ENABLE_SECUREBOOT=$(ENABLE_SECUREBOOT)
-  *_CLANGPDB_AARCH64_CC_FLAGS = -D __DEPRECATED_AARCH64_4K_RUNTIME_GRANULARITY
+  RELEASE_*_*_CC_FLAGS = -D MDEPKG_NDEBUG
+  *_*_*_CC_FLAGS = -Wno-unused-const-variable -Wno-sometimes-uninitialized -Wno-unaligned-access -Wno-deprecated-non-prototype -Wno-dangling-pointer -D ENABLE_SECUREBOOT=$(ENABLE_SECUREBOOT)
+  CLANGPDB:*_*_*_CC_FLAGS = -D CLANG
+  GCC:*_CLANGDWARF_*_CC_FLAGS = -D CLANG
+  *_*_AARCH64_CC_FLAGS = -D __DEPRECATED_AARCH64_4K_RUNTIME_GRANULARITY
 
 [BuildOptions.common.EDKII.SEC,BuildOptions.common.EDKII.MM_CORE_STANDALONE]
-  *_CLANGPDB_*_DLINK_FLAGS = /ALIGN:0x1000 /FILEALIGN:0x1000
+  CLANGPDB:*_*_*_DLINK_FLAGS = /ALIGN:0x1000 /FILEALIGN:0x1000
+  GCC:*_GCC_*_DLINK_FLAGS = -z common-page-size=0x1000
+  GCC:*_CLANGDWARF_*_DLINK_FLAGS = -z common-page-size=0x1000
 
 [BuildOptions.common.EDKII.DXE_CORE,BuildOptions.common.EDKII.DXE_DRIVER,BuildOptions.common.EDKII.UEFI_DRIVER,BuildOptions.common.EDKII.UEFI_APPLICATION,BuildOptions.common.EDKII.MM_CORE_STANDALONE,BuildOptions.common.EDKII.MM_STANDALONE]
-  *_CLANGPDB_*_DLINK_FLAGS = /ALIGN:0x1000
+  CLANGPDB:*_*_*_DLINK_FLAGS = /ALIGN:0x1000
+  GCC:*_GCC_*_DLINK_FLAGS = -z common-page-size=0x1000
+  GCC:*_CLANGDWARF_*_DLINK_FLAGS = -z common-page-size=0x1000
 
 [BuildOptions.common.EDKII.DXE_RUNTIME_DRIVER]
-  *_CLANGPDB_*_DLINK_FLAGS = /ALIGN:0x10000
+  CLANGPDB:*_*_*_DLINK_FLAGS = /ALIGN:0x10000
+  GCC:*_GCC_*_DLINK_FLAGS = -z common-page-size=0x10000
+  GCC:*_CLANGDWARF_*_DLINK_FLAGS = -z common-page-size=0x10000
 
 [BuildOptions.common.EDKII.MM_CORE_STANDALONE,BuildOptions.common.EDKII.MM_STANDALONE]
-  *_CLANGPDB_AARCH64_CC_FLAGS = -mstrict-align
+  *_*_AARCH64_CC_FLAGS = -mstrict-align
 
 [PcdsFixedAtBuild]
   #
@@ -116,6 +123,7 @@
 
 !include SiliciumPkg/SecureBoot-Keys.inc
 !include MdePkg/MdeLibs.dsc.inc
+!include SimpleInit.inc
 
 [LibraryClasses]
   #
@@ -209,6 +217,7 @@
   BmpSupportLib|MdeModulePkg/Library/BaseBmpSupportLib/BaseBmpSupportLib.inf
   BootGraphicsLib|MsGraphicsPkg/Library/BootGraphicsLib/BootGraphicsLib.inf
   BootGraphicsProviderLib|SiliciumPkg/Library/BootGraphicsProviderLib/BootGraphicsProviderLib.inf
+  BootLogoLib|MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
   FrameBufferMemDrawLib|MsGraphicsPkg/Library/FrameBufferMemDrawLib/FrameBufferMemDrawLibDxe.inf
   GraphicsConsoleHelperLib|PcBdsPkg/Library/GraphicsConsoleHelperLib/GraphicsConsoleHelper.inf
@@ -366,6 +375,7 @@
   #
   SiliciumPkg/Sec/Sec.inf {
     <LibraryClasses>
+      NULL|MdePkg/Library/StackCheckLib/StackCheckLib.inf
       NULL|MdeModulePkg/Library/LzmaCustomDecompressLib/LzmaCustomDecompressLib.inf
   }
 

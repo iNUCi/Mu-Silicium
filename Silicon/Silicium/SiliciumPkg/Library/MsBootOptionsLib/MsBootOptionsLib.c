@@ -239,6 +239,9 @@ VOID
 EFIAPI
 MsBootOptionsLibRegisterDefaultBootOptions ()
 {
+  // Register SimpleInit Boot Option
+  RegisterFvBootOption (&gSimpleInitFileGuid,   L"Simple Init", (UINTN)-1, LOAD_OPTION_ACTIVE, (UINT8 *)"MENU", sizeof ("MENU"));
+
   // Register Internal Storage Boot Option
   RegisterFvBootOption (&gMsBootPolicyFileGuid, L"Internal Storage", (UINTN)-1, LOAD_OPTION_ACTIVE, (UINT8 *)"SSD", sizeof ("SSD"));
 
@@ -252,7 +255,7 @@ MsBootOptionsLibGetDefaultOptions (OUT UINTN *OptionCount)
 {
   EFI_STATUS                    Status           = EFI_SUCCESS;
   EFI_BOOT_MANAGER_LOAD_OPTION *Option           = NULL;
-  UINTN                         LocalOptionCount = 2;
+  UINTN                         LocalOptionCount = 3;
 
   // Allocate Memory
   Option = (EFI_BOOT_MANAGER_LOAD_OPTION *)AllocateZeroPool (sizeof (EFI_BOOT_MANAGER_LOAD_OPTION) * LocalOptionCount);
@@ -262,8 +265,9 @@ MsBootOptionsLibGetDefaultOptions (OUT UINTN *OptionCount)
   }
 
   // Create FV Boot Options
-  Status  = CreateFvBootOption (&gMsBootPolicyFileGuid, L"Internal Storage", &Option[0], LOAD_OPTION_ACTIVE, (UINT8 *)"SSD", sizeof ("SSD"));
-  Status |= CreateFvBootOption (&gMsBootPolicyFileGuid, L"USB Storage",      &Option[1], LOAD_OPTION_ACTIVE, (UINT8 *)"USB", sizeof ("USB"));
+  Status  = CreateFvBootOption (&gSimpleInitFileGuid,   L"Simple Init",      &Option[0], LOAD_OPTION_ACTIVE, (UINT8 *)"MENU", sizeof ("MENU"));
+  Status  = CreateFvBootOption (&gMsBootPolicyFileGuid, L"Internal Storage", &Option[1], LOAD_OPTION_ACTIVE, (UINT8 *)"SSD", sizeof ("SSD"));
+  Status |= CreateFvBootOption (&gMsBootPolicyFileGuid, L"USB Storage",      &Option[2], LOAD_OPTION_ACTIVE, (UINT8 *)"USB", sizeof ("USB"));
   if (EFI_ERROR (Status)) {
     DEBUG ((EFI_D_ERROR, "%a: Failed to Create FV Boot Options! Status = %r\n", __FUNCTION__, Status));
 

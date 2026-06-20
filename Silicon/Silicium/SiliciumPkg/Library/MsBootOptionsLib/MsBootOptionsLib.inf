@@ -19,6 +19,7 @@
   PcBdsPkg/PcBdsPkg.dec
   MdeModulePkg/MdeModulePkg.dec
   SiliciumPkg/SiliciumPkg.dec
+  simple-init/SimpleInit.dec
 
 [LibraryClasses]
   DebugLib
@@ -32,6 +33,7 @@
 
 [Guids]
   gMsBootPolicyFileGuid
+  gSimpleInitFileGuid
 
 [Protocols]
   gEfiLoadedImageProtocolGuid

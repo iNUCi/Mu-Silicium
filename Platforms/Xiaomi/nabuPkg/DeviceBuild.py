@@ -38,7 +38,8 @@ class CommonPlatform ():
         "Silicon/Silicium",
         "Silicium-ACPI",
         "Silicium-ACPI/Platforms/Xiaomi",
-        "Silicium-ACPI/SoCs/Qualcomm"
+        "Silicium-ACPI/SoCs/Qualcomm",
+        "simple-init"
     )
 
 # ####################################################################################### #
@@ -62,7 +63,8 @@ class SettingsManager (UpdateSettingsManager, SetupSettingsManager, PrEvalSettin
             RequiredSubmodule ("Common/Mu_OEM_Sample", True),
             RequiredSubmodule ("Mu_Basecore", True),
             RequiredSubmodule ("Silicium-ACPI", True),
-            RequiredSubmodule ("Silicon/Silicium/OpensslPkg/Library/OpensslLib/openssl", True)
+            RequiredSubmodule ("Silicon/Silicium/OpensslPkg/Library/OpensslLib/openssl", True),
+            RequiredSubmodule ("simple-init", True)
         ]
 
     def SetArchitectures (self, list_of_requested_architectures):
@@ -147,7 +149,6 @@ class PlatformBuilder (UefiBuilder, BuildSettingsManager):
         self.env.SetValue ("PRODUCT_NAME", "nabu", "Platform Hardcoded")
         self.env.SetValue ("ACTIVE_PLATFORM", "nabuPkg/nabu.dsc", "Platform Hardcoded")
         self.env.SetValue ("TARGET_ARCH", "AARCH64", "Platform Hardcoded")
-        self.env.SetValue ("TOOL_CHAIN_TAG", "CLANGPDB", "set default to clangpdb")
         self.env.SetValue ("EMPTY_DRIVE", "FALSE", "Default to false")
         self.env.SetValue ("RUN_TESTS", "FALSE", "Default to false")
         self.env.SetValue ("SHUTDOWN_AFTER_RUN", "FALSE", "Default to false")

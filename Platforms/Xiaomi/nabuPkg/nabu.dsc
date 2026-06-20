@@ -67,12 +67,18 @@
   #
   # Platform PEI
   #
-  gQcomPkgTokenSpaceGuid.PcdPlatformType|"LA"
+  gQcomPkgTokenSpaceGuid.PcdPlatformType|"WP"
 
   #
   # Storage
   #
   gQcomPkgTokenSpaceGuid.PcdInitCardSlot|FALSE
+
+  #
+  # SimpleInit settings
+  #
+  gSimpleInitTokenSpaceGuid.PcdLoggerdUseConsole|FALSE
+  gSimpleInitTokenSpaceGuid.PcdGuiDefaultDPI|320
 
 [LibraryClasses]
   #
